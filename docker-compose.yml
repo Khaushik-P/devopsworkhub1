@@ -1,0 +1,24 @@
+version: "3"
+services:
+  frontend:
+    image: frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - backend
+  backend:
+    image: backend:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=database-1.cat1kjxcdkrf.us-east-1.rds.amazonaws.com
+      - DB_USER=admin
+      - DB_PASS=admin12345
+      - DB_NAME=database-1
+      
