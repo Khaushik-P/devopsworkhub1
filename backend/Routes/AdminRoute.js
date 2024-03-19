@@ -8,6 +8,7 @@ import path from "path";
 const router = express.Router();
 
 router.post("/adminlogin", (req, res) => {
+    console.log(req.body)   
   const sql = "SELECT * from admin Where email = ? and password = ?";
   con.query(sql, [req.body.email, req.body.password], (err, result) => {
     if (err) return res.json({ loginStatus: false, Error: "Query error" });

@@ -21,4 +21,3 @@ services:
       - DB_USER=admin
       - DB_PASS=admin12345
       - DB_NAME=employeems
-
