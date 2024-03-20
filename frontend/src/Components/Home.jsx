@@ -15,7 +15,7 @@ const Home = () => {
   }, []);
 
   const AdminRecords = () => {
-    axios.get("http://backend/auth/admin_records").then((result) => {
+    axios.get("http://localhost:3000/auth/admin_records").then((result) => {
       if (result.data.Status) {
         setAdmins(result.data.Result);
       } else {
@@ -24,21 +24,21 @@ const Home = () => {
     });
   };
   const adminCount = () => {
-    axios.get("http://backend/auth/admin_count").then((result) => {
+    axios.get("http://localhost:3000/auth/admin_count").then((result) => {
       if (result.data.Status) {
         setAdminTotal(result.data.Result[0].admin);
       }
     });
   };
   const employeeCount = () => {
-    axios.get("http://backend/auth/employee_count").then((result) => {
+    axios.get("http://localhost:3000/auth/employee_count").then((result) => {
       if (result.data.Status) {
         setemployeeTotal(result.data.Result[0].employee);
       }
     });
   };
   const salaryCount = () => {
-    axios.get("http://backend/auth/salary_count").then((result) => {
+    axios.get("http://localhost:3000/auth/salary_count").then((result) => {
       if (result.data.Status) {
         setSalaryTotal(result.data.Result[0].salaryOFEmp);
       } else {

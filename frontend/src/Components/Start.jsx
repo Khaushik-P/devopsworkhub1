@@ -8,7 +8,7 @@ const Start = () => {
   axios.defaults.withCredentials = true;
   useEffect(() => {
     axios
-      .get("http://backend/verify")
+      .get("http://localhost:3000/verify")
       .then((result) => {
         if (result.data.Status) {
           if (result.data.role === "admin") {
