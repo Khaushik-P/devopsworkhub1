@@ -1,5 +1,6 @@
-pipeline {
+pipeline{
     agent any
+    
     parameters{
         choice(name:'action' , choices:'create\ndelete' ,description:'Select create or destroy.')
     }
@@ -8,34 +9,33 @@ pipeline {
         SCANNER_HOME = tool 'sonar-scanner'
     }
     
-    stages {
-        stage('Clean Workspace') {
-            steps {
+    stages{
+        stage('Clean Workspace'){
+            steps{
                 cleanWs()
             }
         }
         
-        stage('Git Checkout') {
-            steps {
-                git branch: 'main', credentialsId: 'f22fbe83-b5d3-4455-b4b2-84ae8952dc4c', url: 'https://github.com/Khaushik-P/DevopsWorkHub.git'
+        stage('Git Checkout'){
+            steps{
+                git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/Khaushik-P/DevopsworkHUB.git'
             }
         }
-        
         stage("Sonarqube Analysis") {
             when { expression { params.action == 'create'}}  
             steps {
                 withSonarQubeEnv('sonar-server') {
-                    sh "$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=DevopsWorkHub -Dsonar.projectKey=DevopsWorkHub"
+                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=DevopsWorkHub -Dsonar.projectKey=DevopsWorkHub'''
                 }
             }
         }
-         stage('TRIVY FS SCAN') {
-            when { expression { params.action == 'create'}}
-            steps {
-                sh "trivy fs . > trivyfs.txt"
-            }
-        }
-            stage('Check Docker Compose') {
+        // stage('TRIVY FS SCAN') {
+        //     when { expression { params.action == 'create'}}
+        //     steps {
+        //         sh "trivy fs . > trivyfs.txt"
+        //     }
+        // }
+        stage('Check Docker Compose') {
             when { expression { params.action == 'create'}}  
             steps {
                 script {
@@ -50,7 +50,6 @@ pipeline {
                 }
             }
         }
-        
         stage('Delete Docker Image'){
             when { expression { params.action == 'delete'}}  
             steps{
@@ -59,6 +58,5 @@ pipeline {
                 }
             }
         }
-       
     }
 }
